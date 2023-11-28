@@ -445,6 +445,8 @@ function commencergrille() {
         taille = Number(GET('t'));
     }
 
+    document.getElementById("longueur").value = 80 - 10 * (taille - 4);
+
     document.getElementById("taille").value = taille;
     rafraichit()
     document.getElementById('sptaille').style.display = "none";

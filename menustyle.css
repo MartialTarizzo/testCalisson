@@ -23,11 +23,11 @@ body, html{
 
 .content {
     background:#eee;
-    width:100%;
+    width:90%;
     padding:10px;
     height:100%;
     box-sizing:border-box;
-    padding:10px;
+    padding:0px;
 }
 
 .left{
@@ -38,7 +38,7 @@ body, html{
 }
 
 .right{
-    width: 100%;
+    width: 90%;
     background:#aaa;
     height:100%;
 }
@@ -59,8 +59,8 @@ body, html{
 .vertical-menu a {
   background-color: #eee; /* Grey background color */
   color: black; /* Black text color */
-  display: block; /* Make the links appear below each other */
-  padding: 12px; /* Add some padding */
+  display: inline; /* Make the links appear below each other */
+  /*padding: 12px; /* Add some padding */
   text-decoration: none; /* Remove underline from links */
 }
 
