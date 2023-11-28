@@ -714,7 +714,7 @@ function gotoDesign() {
     }
     // réglage de l'interface : seul le bouton de génération du lien est actif
     document.getElementById('btreset').style.display = "none";
-    document.getElementById('genurl').style.display = "";
+    document.getElementById('genurl').style.display = "none";
     document.getElementById('terminedl').style.display = "none";
     document.getElementById('sptaille').style.display = "none";
     document.getElementById("chronospan").style.display = 'none';

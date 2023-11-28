@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exemples de grilles du jeu Calisson</title>
   <link href="menustyle.css" type="text/css" rel="stylesheet" />
+  <script src="enigmes_3_1.js" defer=""></script>
+  <script src="enigmes_3_2.js" defer=""></script>
   <script src="enigmes_4_1.js" defer=""></script>
   <script src="enigmes_4_2.js" defer=""></script>
   <script src="enigmes_5_1.js" defer=""></script>
@@ -13,10 +15,8 @@
   <script src="enigmes_6_1.js" defer=""></script>
   <script src="enigmes_6_2.js" defer=""></script>
   <script type="text/javascript">
-    function iframeLoaded() {
-    }
 
-    function myFunction(ident) {
+    function fillAnchors(ident) {
       var mydiv = document.getElementById("menu");
       mydiv.innerHTML = "";
 
@@ -25,7 +25,7 @@
         if (enigs[i] != '') {
           var aTag = document.createElement('a');
           aTag.setAttribute('href', "calisson.html?tab=" + enigs[i]);
-          aTag.setAttribute('target', "rightf");
+          aTag.setAttribute('target', "gameFrame");
           aTag.innerText = `grille ${ident} n°${i + 1}`;
           aTag.setAttribute("onclick", 'clickOnLink(this)');
           mydiv.appendChild(aTag);
@@ -37,31 +37,32 @@
     document.getElementById("legende").innerText = ''
     }
 
-    clickOnLink = function(link) {
-  var t = link.innerText || link.textContent;
-  document.getElementById("legende").innerText = 'jeu en cours : ' + t;
-  document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-}
+    clickOnLink = function (link) {
+        var t = link.innerText || link.textContent;
+        document.getElementById("legende").innerText = 'jeu en cours : ' + t;
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+      }
   </script>
 </head>
 
 <body>
   <div width="100%">
-    <h1 class=>Jeu du Calisson : grilles automatiques</h1>
+    <h1 class=>Jeu du Calisson : des grilles pour s'entraîner</h1>
     Choisir un groupe de grilles :
-    <input type="button" value="4.1" onclick="myFunction('4_1')"/> &nbsp;
-    <input type="button" value="4.2" onclick="myFunction('4_2')"/> &nbsp; 
-    <input type="button" value="5.1" onclick="myFunction('5_1')"/> &nbsp;
-    <input type="button" value="5.2" onclick="myFunction('5_2')"/> &nbsp;
-    <input type="button" value="6.1" onclick="myFunction('6_1')"/> &nbsp;
-    <input type="button" value="6.2" onclick="myFunction('6_2')"/> &nbsp;
+    <input type="button" value="3.1" onclick="fillAnchors('3_1')"/> &nbsp;
+    <input type="button" value="3.2" onclick="fillAnchors('3_2')"/> &nbsp; 
+    <input type="button" value="4.1" onclick="fillAnchors('4_1')"/> &nbsp;
+    <input type="button" value="4.2" onclick="fillAnchors('4_2')"/> &nbsp; 
+    <input type="button" value="5.1" onclick="fillAnchors('5_1')"/> &nbsp;
+    <input type="button" value="5.2" onclick="fillAnchors('5_2')"/> &nbsp;
+    <input type="button" value="6.1" onclick="fillAnchors('6_1')"/> &nbsp;
+    <input type="button" value="6.2" onclick="fillAnchors('6_2')"/> &nbsp;
     <span id="legende"></span>
   </div>
   <div class="vertical-menu" width="100%">
     <div id="menu" width="10%" style="float:left"></div>
-    <iframe name="rightf" id="game" width="89%" style="float:right"
-      src=""
+    <iframe name="gameFrame" id="game" width="89%" style="float:right"
+      src="info.html"
       frameborder="0" height="100%">
     </iframe>
     </div>
