@@ -84,6 +84,7 @@ if (!(is_touch_device())) {
     document.getElementById('explicationcontrole').style.display = '';
     document.getElementById('explicationcontroleportable').style.display = 'none';
 } else {
+    document.getElementById('btmode').style.display = '';
     document.getElementById('explicationcontrole').style.display = 'none';
     document.getElementById('explicationcontroleportable').style.display = '';
 }
