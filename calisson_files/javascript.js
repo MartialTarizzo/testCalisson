@@ -150,7 +150,7 @@ function rafraichit() {
 // recalcule toutes les grandeurs géométriques dans tabsegment et tabmilieu
 function miseajourpointencours() {
     cpt = 0;
-    console.log(taille)
+    // console.log(taille)
     //côté gauche avec diagonale verticale
     for (j = 0; j < 2 * taille; j++) {
 
@@ -412,7 +412,7 @@ function miseajourpoint(chaine) {
             }
         }
     }
-    console.log(tabmilieu)
+    // console.log(tabmilieu)
 }
 
 function commencergrille() {
@@ -480,30 +480,9 @@ function commencergrille() {
 
 // Associée au bouton 'Reset' : annule les actions de l'utilisateur
 function reset() {
-    //chronoarret();
+    chronoarret();
     chronofin = 0;
-    for (i = 0; i < tabmilieu.length; i++) {
-        {
-            if (tabmilieu[i][2] == true) {
-                tabmilieu[i][2] = false;
-            }
-            if (tabmilieu[i][4] == true) {
-                tabmilieu[i][4] = false;
-            }
-        }
-    }
-    dessinerlafigure()
-
-    if (GET('tab') == undefined) {
-        rafraichit()
-        modejeu = false;
-        solutionpresente = false;
-        document.getElementById("chronospan").style.display = 'none';
-        document.getElementById("losange").style.display = 'none';
-        document.getElementById('messagediv').style.display = "none";
-    } else {
-        dessinerlafigure()
-    }
+    commencergrille()
 }
 
 function partage() {
@@ -752,7 +731,7 @@ function ajouterenleversegment(evt) {
                             } else {
                                 tabmilieu[i][2] = false;
                             }
-                            console.log(tabmilieu[i][2]);
+                            // console.log(tabmilieu[i][2]);
                         }
                         dessinerlafigure()
                         context.beginPath();
@@ -797,10 +776,27 @@ function ajouterenleversegment(evt) {
             dataURL = canvasbis.toDataURL();
             var chaine = "<img src='" + dataURL + "'/>"
             chaine = chaine + '<br/>Bravo! Vous avez fait un temps de ' + chronofin + ' s et utilisé ' + nblosangeutilise + ' losange(s).';
+            chaine = chaine + '<br/>Score : ' + calcScore()
             document.getElementById('message').innerHTML = chaine;
             document.getElementById('messagediv').style.display = "";
         }
     }
+}
+
+function calcScore() {
+    let nbTotLos = 3 * taille ** 2;
+    let tab = GET('tab');
+    let nbAretes = tab.length;
+    let nbArUser = 0;
+    for (let s of tab) {
+        if (s == 's') { nbArUser++ }
+    }
+    let perfLos = Math.min(nblosangeutilise / nbTotLos, 1); // meilleur si faible, entre 0 et 1 
+    let perfTime = Math.max(chronofin, 1) / nbArUser; // meilleur si faible, entre 0 et infini ...
+    let perfAr = nbArUser / nbAretes; // meilleur si grand, entre 0 et 1
+
+    return Math.round(100 * (taille/3)**2 * (1 - perfLos) * (5 / perfTime) * perfAr)
+
 }
 
 function messageok() {
@@ -888,8 +884,8 @@ function chronoarret() {
 function testesolution() {
     var bool = true;
     var i = 0;
-    console.log(solution);
-    console.log(solution[i] + "==" + tabmilieu[i][2])
+    // console.log(solution);
+    // console.log(solution[i] + "==" + tabmilieu[i][2])
     while ((i < tabmilieu.length) && (bool)) {
         bool = (solution[i] == tabmilieu[i][2])
         i++;
@@ -943,7 +939,7 @@ function rafraichitlongueur() {
 
 // Associée au bouton de changement de mode pour interface tactile (arête/losange)
 function changemode() {
-    console.log(mode)
+    // console.log(mode)
     if (mode == "arete") {
         mode = "losange";
         document.getElementById("btmode").innerHTML = "Mode losange";
@@ -983,7 +979,7 @@ function copierdanspressepapier_back(url) {
 
     var content = document.getElementById('copiepressepapier');
     content.value = url;
-    console.log(content)
+    // console.log(content)
     content.select();
     document.execCommand('copy');
     alert("Url dans le presse-papier!\n (controle-V pour coller l'url à l'endroit voulu) ");
