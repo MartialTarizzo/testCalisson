@@ -31,7 +31,7 @@ document.getElementById('terminedl').style.display = "none";
 
 // Les 3 tableaux de travail, unidimentionnels
 // pour les arêtes, contient des [[xa,ya],[xb,yb]], coord des extrémités des segments
-tabsegment = [] 
+tabsegment = []
 
 /****************************************************
  tabmilieu est Le tableau fondamental, contenant la plus grande partie des infos sur la grille
@@ -47,14 +47,14 @@ tabsegment = []
 - typeLosange : valeur parmi ('gauche', 'hori', 'droite') en fonction de l'orientation du losange
 - afficheLosange : booléen définissant l'affichage ou non du losange
 *****************************************************/
-tabmilieu = []  
+tabmilieu = []
 
 // solution contient true, false ou "bloquee"
 // "bloquee" -> arête fixée non modifiable. Fait partie de la solution 
 //      <=> arête de l'énigme toujours affichée dans la page web
 //  true -> arête de la solution, non affichée pendant le jeu (ça serait trop facile !)
 // false -> arête ne faisant pas partie de la solution
-solution = []; 
+solution = [];
 
 // modejeu est un drapeau permettant de savoir si on est mode jeu ou design
 modejeu = false;
@@ -70,7 +70,7 @@ chronofin = 0;
 numerogrille = '';
 
 // réglage de l'interface sur un écran tactile 
-var is_touch_device = function() {
+var is_touch_device = function () {
     try {
         document.createEvent("TouchEvent");
         return true;
@@ -646,14 +646,14 @@ function getMousePos(canvas, evt) {
     };
 }
 
-canvas.addEventListener('pointerdown', function(evt) {
+canvas.addEventListener('pointerdown', function (evt) {
     ajouterenleversegment(evt)
 }, false);
 
-canvas.addEventListener('pointermove', function(evt) {
+canvas.addEventListener('pointermove', function (evt) {
     curseur(evt)
 }, false);
-canvas.addEventListener('pointerout', function(evt) {
+canvas.addEventListener('pointerout', function (evt) {
     dessinerlafigure()
 }, false);
 
@@ -685,12 +685,12 @@ function ajouteunlosange(x, y) {
 // MT+ pour passer du mode jeu au mode retouche de grille
 function gotoDesign() {
     // MAJ de tabmilieu en fonction de solution
-    for(var i = 0; i < solution.length; i++) {
+    for (var i = 0; i < solution.length; i++) {
         switch (solution[i]) {
-            case true : tabmilieu[i][2]='solution'; break;
-            case false : tabmilieu[i][2] = false; break;
-            case 'bloquee' : tabmilieu[i][2] = true;
-        } 
+            case true: tabmilieu[i][2] = 'solution'; break;
+            case false: tabmilieu[i][2] = false; break;
+            case 'bloquee': tabmilieu[i][2] = true;
+        }
     }
     // réglage de l'interface : seul le bouton de génération du lien est actif
     document.getElementById('btreset').style.display = "none";
@@ -784,19 +784,31 @@ function ajouterenleversegment(evt) {
 }
 
 function calcScore() {
-    let nbTotLos = 3 * taille ** 2;
+    let nbTotLos = 3 * taille ** 2; // nbre max de losanges dans la grille
     let tab = GET('tab');
-    let nbAretes = tab.length;
-    let nbArUser = 0;
+    let nbArUser = 0;   // nb arêtes ajoutées par le joueur
     for (let s of tab) {
         if (s == 's') { nbArUser++ }
     }
-    let perfLos = Math.min(nblosangeutilise / nbTotLos, 1); // meilleur si faible, entre 0 et 1 
-    let perfTime = Math.max(chronofin, 1) / nbArUser; // meilleur si faible, entre 0 et infini ...
-    let perfAr = nbArUser / nbAretes; // meilleur si grand, entre 0 et 1
+    let nbAretes = 0;   // nb total d'arêtes de la solution
+    for (let s of tab) {
+        if (s == 't') { nbAretes++ }
+    }
+    nbAretes += nbArUser;
+    // proportion de losanges utilisée. meilleure si faible, entre 0 et 1
+    let propLos = Math.min(nblosangeutilise / nbTotLos, 1);
+    // durée moyenne de placement d'une arête, > à 1 s  
+    let durPlacArUser = Math.max(chronofin, 1) / nbArUser;
+    // proportion d'arêtes à placer, entre 0 et 1. Croît avec la difficulté de la grille
+    let perfAr = nbArUser / nbAretes;
+    let durPlacAr = 2 // durée (en s) moyenne de placement d'une arête pour un bon joueur
 
-    return Math.round(100 * (taille/3)**2 * (1 - perfLos) * (5 / perfTime) * perfAr)
-
+    // Calcul du score qui dépend de la taille de la grille et des variables précédentes
+    return Math.max(
+        taille,
+        //Math.round(10 * taille ** 2 * (1.1 - propLos) * (durPlacAr / durPlacArUser) * perfAr ** 2)
+        Math.round(1 * taille ** 3 * (1.1 - propLos) * (durPlacAr / durPlacArUser) * (0.5 + perfAr))
+    )
 }
 
 function messageok() {
@@ -848,7 +860,7 @@ function genereurl() {
     while (((isNaN(numerogrille))) && (numerogrille != '')) {
         numerogrille = prompt('Indiquer le numéro de la grille (laisser vide si non défini');
     }
-     chaine = chaine + numerogrille
+    chaine = chaine + numerogrille
     copierdanspressepapier("https://mathix.org/calisson/index.html" + chaine)
     //	alert("Voici la chaîne à copier : https://mathix.org/calisson/index.html" + chaine)
 }
@@ -857,7 +869,7 @@ function GET(param) {
     var vars = {};
     window.location.href.replace(location.hash, '').replace(
         /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-        function(m, key, value) { // callback
+        function (m, key, value) { // callback
             vars[key] = value !== undefined ? value : '';
         }
     );
@@ -870,7 +882,7 @@ function GET(param) {
 
 function chronomarche() {
 
-    chronointerval = setInterval(function() {
+    chronointerval = setInterval(function () {
         chrono++;
         document.getElementById("chrono").innerHTML = chrono + ' s'
     }, 1000);
@@ -906,7 +918,7 @@ function start() {
         document.getElementById('messagediv').style.display = "none";
     } else {
         commencergrille()
-    }    
+    }
 }
 
 // On démarre !
@@ -950,14 +962,14 @@ function changemode() {
 }
 
 // empêche l'affichage du menu contextuel en cas de clic-droit sur la figure
-canvas.oncontextmenu = function(event) {
+canvas.oncontextmenu = function (event) {
     event.preventDefault();
 }
 
 // associée au bouton de téléchargement de l'image de la grille
 function dl() {
     var canvas = document.getElementById("canvas");
-    canvas.toBlob(function(blob) {
+    canvas.toBlob(function (blob) {
         saveAs(blob, "solution.png");
     });
 }
@@ -965,9 +977,9 @@ function dl() {
 function copierdanspressepapier(url) {
     // On tente d'écrire l'url directement dans le PP. Si le navigateur n'y arrive pas, on présente une fenêtre d'information
     // permettant de copier l'url "à la main"
-    navigator.clipboard.writeText(url).then(function() {
+    navigator.clipboard.writeText(url).then(function () {
         alert("Url dans le presse-papier!\n (controle-V pour coller l'url à l'endroit voulu) ");
-    }, function() {
+    }, function () {
         prompt('Voici l\'url : ', url);
     });
 }

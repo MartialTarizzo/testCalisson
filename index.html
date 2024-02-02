@@ -30,7 +30,7 @@
           var aTag = document.createElement('a');
           aTag.setAttribute('href', "calisson.html?tab=" + enigs[i]);
           aTag.setAttribute('target', "gameFrame");
-          aTag.innerText = `grille ${ident} n°${i + 1}`;
+          aTag.innerText = `grille n°${i + 1}`;
           aTag.setAttribute("onclick", 'clickOnLink(this)');
           mydiv.appendChild(aTag);
           mydiv.innerHTML = mydiv.innerHTML + "<br>"
@@ -52,24 +52,38 @@
 <body>
   <div width="100%">
     <h1 class="mainTitle">Jeu du Calisson : <a href="index.html">des grilles pour s'entraîner</a> </h1>
-    <div class="groupButtons">
-      Groupe de grilles :
-      <input type="button" value="3.1" onclick="fillAnchors('3_1')"/> &nbsp;
-      <input type="button" value="3.2" onclick="fillAnchors('3_2')"/> &nbsp; 
-      <input type="button" value="3.3" onclick="fillAnchors('3_3')"/> &nbsp; 
-      <input type="button" value="4.1" onclick="fillAnchors('4_1')"/> &nbsp;
-      <input type="button" value="4.2" onclick="fillAnchors('4_2')"/> &nbsp; 
-      <input type="button" value="4.3" onclick="fillAnchors('4_3')"/> &nbsp; 
-      <input type="button" value="5.1" onclick="fillAnchors('5_1')"/> &nbsp;
-      <input type="button" value="5.2" onclick="fillAnchors('5_2')"/> &nbsp;
-      <input type="button" value="5.3" onclick="fillAnchors('5_3')"/> &nbsp;
-      <input type="button" value="6.1" onclick="fillAnchors('6_1')"/> &nbsp;
-      <input type="button" value="6.2" onclick="fillAnchors('6_2')"/> &nbsp;
-      <input type="button" value="6.3" onclick="fillAnchors('6_3')"/> &nbsp;
-      <span id="legende"></span>
-  
-    </div>
-  </div>
+    <fieldset>
+      <legend>Groupe de grilles :</legend>
+      <div class="groupButtons" id="gridsButtons">
+        <input type="radio" id="3.1" value="3.1" name="grids" onclick="fillAnchors('3_1')" />
+        <label "3.1" ">3.1</label>&nbsp;
+        <input type="radio" id="3.2" value="3.2" name="grids" onclick="fillAnchors('3_2')" />
+        <label "3.2" >3.2</label>&nbsp;
+        <input type="radio" id="3.3" value="3.3" name="grids" onclick="fillAnchors('3_3')" />
+        <label "3.3" >3.3</label>&nbsp;
+        <input type="radio" id="4.1" value="4.1" name="grids" onclick="fillAnchors('4_1')" />
+        <label "4.1" >4.1</label>&nbsp;
+        <input type="radio" id="4.2" value="4.2" name="grids" onclick="fillAnchors('4_2')" />
+        <label "4.2" >4.2</label>&nbsp;
+        <input type="radio" id="4.3" value="4.3" name="grids" onclick="fillAnchors('4_3')" />
+        <label "4.3" >4.3</label>&nbsp;
+        <input type="radio" id="5.1" value="5.1" name="grids" onclick="fillAnchors('5_1')" />
+        <label "5.1" >5.1</label>&nbsp;
+        <input type="radio" id="5.2" value="5.2" name="grids" onclick="fillAnchors('5_2')" />
+        <label "5.2" >5.2</label>&nbsp;
+        <input type="radio" id="5.3" value="5.3" name="grids" onclick="fillAnchors('5_3')" />
+        <label "5.3" >5.3</label>&nbsp;
+        <input type="radio" id="6.1" value="6.1" name="grids" onclick="fillAnchors('6_1')" />
+        <label "6.1" >6.1</label>&nbsp;
+        <input type="radio" id="6.2" value="6.2" name="grids" onclick="fillAnchors('6_2')" />
+        <label "6.2" >6.2</label>&nbsp;
+        <input type="radio" id="6.3" value="6.3" name="grids" onclick="fillAnchors('6_3')" />
+        <label "6.3" >6.3</label>&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="legende"></span>
+      </div>
+    </fieldset>
+    
   <div class="vertical-menu" width="100%">
     <div id="menu" width="10%" style="float:left"></div>
     <iframe name="gameFrame" id="game" width="89%" style="float:right"
